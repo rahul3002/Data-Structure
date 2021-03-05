@@ -1,0 +1,2497 @@
+#+INCLUDE: theme/style.org
+#+TITLE: Computer Graphics 
+#+DESCRIPTION: cpp/c++ interoperability ffi shim qt5 widgets gui library wrapper julia dlang
+#+STARTUP: content
+
+
+* Computer Graphics 
+** Main Computer Graphics APIs 
+
+ *Native Graphics APIs* (exposed as C-subroutines)
+
+  + [[https://www.opengl.org//][OpenGL]] (Khronos Group) - Main OpenGL specification
+    + => Open standard, cross-platform and vendor-independent API for
+      rendering 2D or 3D computer graphics with GPU (Graphics
+      Processing Unit) acceleration. OpenGL can be used for
+      implementing computer graphics, games, scientific vizualization,
+      virtual reality and CADs - Computer Aided Design
+      software. OpenGL API specificiation is maintained as an
+      open-standard by the Krhonos Group industry consortium.
+
+    + => OpenGL has two modes, _immediate mode_ (a.k.a fixed-function
+      pipeline, legacy-OpenGL) which is being depreacted, and _retained_
+      _mode_ (modern OpenGL) that delivers more performance and is based
+      on buffer-objects and shaders.
+
+    + => OpenGL Official Specification: [[https://www.khronos.org/registry/OpenGL/index_gl.php][Khronos OpenGL® Registry]]
+
+  + _OpenGL ES_  (Khronos Group)
+    + => OpenGL for embedded systems, mobile devices and touch screen
+      devices and so on. This API (Application Programming Interface)
+      is widely used by many mobile games. 
+
+    + => Similar to OpenGL specfication, but supports only the
+      _retained-mode_. OpenGL ES does not support _immediate-mode_. As a
+      result, calls to legacy OpenGL subroutines such as glBegin(),
+      glEnd(), glRotate(), glTranslate(), ..., are not supported.
+
+  + [[https://www.khronos.org/vulkan/][Vulkan]]_(Khronos Group)
+    + => Graphics API with GPU acceleration that provides more
+      low-level GPU control and less overhead than OpenGL. This API is
+      designed for taking more advantag of multi-core CPU
+      architectures and performing tasks in parallel.
+
+  + [[https://en.wikipedia.org/wiki/DirectX][DirectX]] / Direct3D (Microsoft inc.) - Windows-only
+    + => Microsoft's graphics API for accessing the GPU hardware. It
+      is only available on operating systems based Windows-NT kernel
+      and Windows-CE kernel (embedded version of Windows-NT).
+
+  + [[https://developer.apple.com/metal/][Metal]] (Apple inc.) 
+    + => Apple-only API for rendering 2D or 3D computer graphics with
+      GPU acceleration. This API is available only on iOS and MacOSX
+      operating systems. On iOS and MacOSX, Apple is deprecating and
+      phasing out OpenGL in favor of its own  API.
+
+ *Web Computer Graphics APIs* (exposed as Javascript/ECMAScript subroutines)
+
+  + [[https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL][WebGL]] (Khronos Group)  / Html5 API 
+    + => Based on OpenGL ES and implemented by major web
+      browsers. Unlike OpenGL or OpenGL ES, which are exposed via C
+      subroutines, WebGL is exposed to calling codes via JavaScript
+      (ECMAScript) and Html5 canvas.
+
+    + => Note: This API does not support OpenGL immediate-mode or
+      legacy OpenGL. WebGL only supports _retained-mode_. 
+
+  + [[https://en.wikipedia.org/wiki/WebGPU][WebGPU]] (W3C Consortium) - Upcoming Html5 standard. 
+    + => Upcoming graphics API for web browser, based on Vulkan,
+      Metal and DirectX which intends to deliver more low level GPU
+      control and higher performance. Unlike WebGL, this API is not a
+      direct port of any native graphics API such as Vulkan, Metal and
+      DirectX. 
+    + [[https://gpuweb.github.io/gpuweb/][WebGPU - Editor’s Draft]] 
+    + [[https://github.com/gpuweb/gpuweb/wiki/Implementation-Status][Implementation Status · gpuweb/gpuweb Wiki · GitHub]]
+    + [[https://github.com/gpuweb/gpuweb][GitHub - gpuweb/gpuweb: Where the GPU for the Web work happens!]]
+    + [[https://kvark.github.io/web/gpu/native/2020/05/03/point-of-webgpu-native.html][Point of WebGPU on native]]
+    + [[https://hacks.mozilla.org/2020/04/experimental-webgpu-in-firefox/][A Taste of WebGPU in Firefox - Mozilla Hacks - the Web developer blog]]
+
+
+ *Further Reading* 
+
+  + [[https://vulkan.gpuinfo.org/listdevices.php][Devices - Vulkan Hardware Database by Sascha Willems]] 
+
+  + [[https://github.com/KhronosGroup/MoltenVK][GitHub - KhronosGroup/MoltenVK]]
+    + "MoltenVK is a Vulkan Portability implementation. It layers a
+      subset of the high-performance, industry-standard Vulkan
+      graphics and compute API over Apple's Metal graphics framework,
+      enabling Vulkan applications to run on iOS and macOS."
+
+  + [[https://www.pcgamer.com/doom-benchmarks-return-vulkan-vs-opengl/][Doom benchmarks return: Vulkan vs. OpenGL | PC Gamer]]
+
+  + [[https://linuxhint.com/vulkan-for-linux-users/][Vulkan for Linux Users – Linux Hint]] 
+
+  + [[https://stackoverflow.com/questions/56766983/what-can-vulkan-do-specifically-that-opengl-4-6-cannot][What can Vulkan do specifically that OpenGL 4.6+ cannot? - Stack]]
+
+  + [[https://softwareengineering.stackexchange.com/questions/380832/opengl-and-global-state][design - OpenGL and global state - Software Engineering Stack Exchange]]
+** OpenGL Documentation 
+
+ *OpenGL:*
+
+   * [[http://docs.gl/][docs.gl]] [BEST]
+     + Allows searching and quickly browsing the OpenGL
+       documentation.
+
+   * [[https://www.khronos.org/registry/OpenGL/index_gl.php][Khronos OpenGL® Registry]]
+     * OpenGL Official Specification.
+
+   * [[https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)][Core Language (GLSL) - OpenGL Wiki]] / Khronos Group 
+     * Official Documentation of OpenGL shading language.
+
+   * [[https://www.khronos.org/opengl/wiki/Data_Type_(GLSL)][Data Type (GLSL) - OpenGL Wiki]] / Khronos Group
+     * Data types of GLSL - OpenGL Shading Language.
+
+   * [[https://thebookofshaders.com/][The Book of Shaders]] - (Patricio Gonzalez and Jen Love)
+
+   * [[https://web.archive.org/web/20190629031543/http://antongerdelan.net/teaching/3dprog1/maths_cheat_sheet.pdf][3D Maths Cheat Sheet]] - Reference Card for computer graphics
+     linear algebra. (homogeneous coordinates, rotation matrices,
+     translation matrices and etc.)
+
+ *WebGL:*
+
+   * [[https://www.khronos.org/webgl/][WebGL Overview - The Khronos Group Inc]]
+     * "WebGL is a cross-platform, royalty-free web standard for a
+       low-level 3D graphics API based on OpenGL ES, exposed to
+       ECMAScript via the HTML5 Canvas element. Developers familiar
+       with OpenGL ES 2.0 will recognize WebGL as a Shader-based API
+       using GLSL, with constructs that are semantically similar to
+       those of the underlying OpenGL ES API. It stays very close to
+       the OpenGL ES specification, with some concessions made for
+       what developers expect out of memory-managed languages such as
+       JavaScript. WebGL 1.0 exposes the OpenGL ES 2.0 feature set;
+       WebGL 2.0 exposes the OpenGL ES 3.0 API." 
+
+   * [[https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial][WebGL tutorial - Web APIs | MDN]]
+
+   * [[https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL][Getting started with WebGL - Web APIs | MDN]] - WebGL Documentation.
+
+   * [[https://webglfundamentals.org/][WebGL Fundamentals]]
+
+** OpenGL Terminology
+
+  + _OpenGL_ - Open Graphics Library
+
+  + [[https://www.khronos.org/opengl/wiki/OpenGL_Context][OpenGL Context]] 
+
+  + [[http://glew.sourceforge.net/index.html][GLEW]] - OpenGL Extension Wrangler
+
+  + ARB - Architecture Review Board 
+
+  + OpenGL _Immediate Mode_ (Fixed-Function Pipeline, Legacy OpenGL)
+    + Also known as: Legacy OpenGL, Fixed-Function Pipeline 
+    + Drawing is mostly performed without storing data on GPU and by
+      using subroutines calls to glScale(), glRotate(), glPush(), glPop(),
+      glTranslate(), glBegin(), glEnd() and so on.
+    + Immediate-mode is not supported by OpenGL ES or WebGL.
+    + See: [[https://www.khronos.org/opengl/wiki/Fixed_Function_Pipeline][Fixed Function Pipeline - OpenGL Wiki]]
+
+  + OpenGL _retained mode_ (Programmable Pipeline, Modern OpenGL)
+    + Also known as: Modern OpenGL, Programmable Pipeline 
+    + New and modern OpenGL API => Drawing is performed by storing
+      data on the GPU via VBO (Vertex Buffer Objects) and by using
+      _shaders_, programs that runs on GPU, for performing geometric
+      vertex transformations, color and texturing computations.
+    + More peformant than _immediate-mode_ as the data is not sent to
+      the GPU every frame. 
+
+  + _GPU_ - Graphics Processing Unit
+
+  + _GPGPU_ - General Purpose Computing on GPU
+    + APIs: OpenGL, Cuda, and so on. 
+    + Parallel non-graphics computations on GPU. GPGPU APIs take
+      advantage of GPU parallel computing features for high
+      performance computing.
+
+  + [[https://www.khronos.org/opengl/wiki/Direct_State_Access][DSA]] - Direct State Access
+
+  + _Vertex_ - 2D or 3D coordinates representing a point in the space.
+
+  + _2D_ - 2 dimensions (plane) / 2 coordinates (X, Y)
+
+  + _3D_ - 3 dimensions (space) / 3 coordinates (X, Y, Z)
+
+  + _Homogenous Coordinate_ - Coordinate system using an extra dimension
+    for encoding translation coordinate transformation in the same way
+    as rotation matrices transformations.
+    + 2D homogeneous coordinates: (X, Y, W = 1)
+    + 3D homogeneous coordinates: (X, Y, Z, W = 1)
+
+  + _NDC_ - Normalized Device Coordinate
+    + Default coordinates used by OpenGL (-1.0 to 1.0) for each
+      axis. Any vertex that falls out of this range will not be visible
+      on the screen. 
+
+  + [[https://www.khronos.org/opengl/wiki/Buffer_Object][Buffer Object]] 
+
+  + _VBO_ - Vertex Buffer Object
+
+  + _VAO_ - Vertex Array Object
+
+  + _FBO_ - Framebuffer Object
+
+  + _IBO_ - Index Buffer Object
+
+  + _UBO_ - Uniform Buffer Object 
+
+  + _FPS_ - Frame Per Seconds 
+
+  + _Shader_ - Program that runs on the GPU and performs vertex
+    computations such as coordinate transformations (matrix
+    multiplications), colors and texture computations.
+
+  + _GLSL_ - OpenGL shading programming language - for performing
+    computer graphics calculations on the GPU hardware.
+
+  + _HLSL_ (High-Level Shader Language) - Microsft DirectX shading language.
+
+** OpenGL companion libraries 
+
+  *OpenGL Companion Libraries* 
+
+Core Libraries:
+
+  + _GL_  - OpenGL Graphics API 
+
+OpenGL Loaders:
+
+  + Libraries that abstracts OpenGL function pointers loading in a
+    platform-independent way. 
+
+  + [[http://glew.sourceforge.net/index.html][GLEW]] - OpenGL Extension Wrangler [MOST USED]
+    + "The OpenGL Extension Wrangler Library (GLEW) is a
+      cross-platform open-source C/C++ extension loading library. GLEW
+      provides efficient run-time mechanisms for determining which
+      OpenGL extensions are supported on the target platform. OpenGL
+      core and extension functionality is exposed in a single header
+      file. GLEW has been tested on a variety of operating systems,
+      including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solaris."
+
+  + [[https://glad.dav1d.de/][GLAD]] - [MOST-USED] Multi-Language GL/GLES/EGL/GLX/WGL
+    Loader-Generator based on the official specs.
+
+  + [[https://github.com/cginternals/glbinding][GitHub - cginternals/glbinding]]
+    + "A C++ binding for the OpenGL API, generated using the gl.xml
+      specification." 
+
+  + [[https://github.com/anholt/libepoxy][GitHub - anholt/libepoxy]]
+    + "Epoxy is a library for handling OpenGL function pointer
+      management for you."
+
+  + [[https://github.com/imakris/glatter][GitHub - imakris/glatter]]
+    + "An OpenGL loading library, with support for GL, GLES, EGL, GLX and WGL"
+
+  + [[https://galogen.gpfault.net/][Galogen OpenGL Loader Generator]]
+    + "Galogen is an OpenGL loader generator. Given an API version and
+      a list of extensions, Galogen will produce corresponding headers
+      and code that load the exact OpenGL entry points you need. The
+      produced code can then be used directly by your C or C++
+      application, without having to link against any additional
+      libraries." 
+
+  + [[https://github.com/SFML/SFML-glLoadGen][GitHub - SFML/SFML-glLoadGen]]
+    + Customized glLoadGen for SFML
+
+Libraries for window systems, event handling and OpenGL context abstraction: 
+ 
+  + Abstract platform-specific window system and event handling. 
+
+  + [[https://www.glfw.org/][GLFW]] [BEST] [MOST-USED]
+    * C library that provides graphics windows for OpenGL, Vulkan,
+      OpenGL ES and deals with event handling.
+
+  + [[https://www.libsdl.org/][SDL]] (Simple Direct Media Layer) [BEST] [MOST-USED]
+    * Cross-platform C library that provides windows and event
+      handling for many computer graphics APIs such as OpenGL, Vulkan
+      and DirectX. SLD also has facilities for dealing with audio,
+      joystick, CD-ROM, network and threads.
+
+  + [[http://freeglut.sourceforge.net/][GLUT]] (FreeGlut) - OpenGL Utility Toolkit
+    * Deals with window creation, OpenGL initialization, event
+      handling and  so on.
+    * Docs: https://www.glfw.org/documentation.html
+
+
+OpenGL Math and Computer Graphics Math: 
+
+
+  + [[https://glm.g-truc.net/0.9.5/api/index.html][GLM]] (OpenGL Mathematics Library) [MOST-USED]
+    + Source code: https://github.com/g-truc/glm
+    + Header-only C++ library that provides classes for computer
+      graphics mathematics such as: 2D, 3D and homogeneous coordinate
+      vector; 2D, 3D and homogeneous coordinate transformation
+      matrices; quaternions and subroutines for computing camera,
+      perspective or orthogonal transformation matrices.
+
+  + [[https://github.com/Kazade/kazmath][GitHub - Kazade/kazmath]] - A C math library targeted at games
+    + "Kazmath is a simple 3D maths library written in C. It was
+      initially coded for use in my book, Beginning OpenGL Game
+      Programming - Second edition, but rapidly gained a life of its
+      own. Kazmath is now used by many different projects, and
+      apparently is used in 25% of the worlds mobile games (yeah, I
+      don't believe it either - but it's used in Cocos2d-x)." 
+
+  + [[https://github.com/recp/cglm][GitHub - recp/cglm]] -  Highly Optimized Graphics Math (glm) for C
+
+  + See: [[https://github.com/chunkyguy/Math-Library-Test][GitHub - chunkyguy/Math-Library-Test]] - A comparison of the
+    various major math libraries for speed and ease of use. 
+
+
+Text and Font Rendering: 
+
+  + [[https://www.freetype.org/][The FreeType Project]]
+    * Brief: "It is written in C, designed to be small, efficient,
+      highly customizable, and portable while capable of producing
+      high-quality output (glyph images) of most vector and bitmap
+      font formats."
+
+  + [[http://oglft.sourceforge.net/][OGLFT: OpenGL-FreeType Library]]
+    * Brief: "This C++ library supplies an interface between the fonts
+      on your system and an OpenGL or Mesa application. It uses the
+      excellent FreeType library to read font faces from their files
+      and renders text strings as OpenGL primitives."
+
+  + [[https://github.com/vallentin/glText][GitHub - vallentin/glText]] - [HEADER-ONLY-LIBRARY]
+    * Brief: "glText is a simple cross-platform single header text
+      rendering library for OpenGL. glText requires no additional
+      files (such as fonts or textures) for drawing text, everything
+      comes pre-packed in the header."
+
+  + [[https://github.com/MartinPerry/OpenGL-Font-Rendering][GitHub - MartinPerry/OpenGL-Font-Rendering]] 
+    + Brief: "Rendering UNICODE fonts with OpenGL This library is
+      still work-in-progress. This is a working beta version."
+
+  + [[http://nuclear.mutantstargoat.com/sw/libdrawtext/][libdrawtext - OpenGL text rendering library]]
+    + Brief: "Libdrawtext uses freetype2 for glyph rasterization. If
+      you would rather avoid having freetype2 as a dependency, you can
+      optionally compile libdrawtext without it, and use pre-rendered
+      glyphmaps. Glyphmaps can be generated by the included
+      font2glyphmap tool, or by calling dtx_save_glyphmap."
+
+  + [[https://github.com/codetiger/Font23D][GitHub - codetiger/Font23D]] - Convert any text to a 3d mesh using any font style
+    + Brief: "Font23D is a C++ library for creating a 3d mesh of any
+      Text in the given True type font." 
+
+Non-categorized / Miscellaneous: 
+
+  + [[http://glsdk.sourceforge.net/docs/html/index.html][GLSDK - Unofficial OpenGL Software Development Kit]]
+    + Brief: "The Unofficial OpenGL Software Development Kit is a
+      collection of libraries and utilities that will help you get
+      started working with OpenGL. It provides a unified,
+      cross-platform build system to make compiling the disparate
+      libraries easier. Many of the components of the SDK are C++
+      libraries. Each component of the SDK specifies the terms under
+      which they are distributed. All licenses used by components are
+      approximately like the MIT license in permissivity. The parts of
+      the SDK responsible for maintaining the build, as well as all
+      examples, are distributed under the MIT License."
+
+
+ *See also:*
+
+  + [[https://www.khronos.org/opengl/wiki/OpenGL_Loading_Library][OpenGL Loading Library - OpenGL Wiki]] / Khronos Group
+    + Brief: "An OpenGL Loading Library is a library that loads
+      pointers to OpenGL functions at runtime, core as well as
+      extensions. This is required to access functions from OpenGL
+      versions above 1.1 on most platforms. Extension loading
+      libraries also abstracts away the difference between the loading
+      mechanisms on different platforms."
+
+  + [[https://www.khronos.org/opengl/wiki/Load_OpenGL_Functions][Load OpenGL Functions - OpenGL Wiki]]  / Khronos Group 
+    + Brief: "Loading OpenGL Functions is an important task for
+      initializing OpenGL after creating an OpenGL context. You are
+      strongly advised to use an OpenGL Loading Library instead of a
+      manual process. However, if you want to know how it works
+      manually, read on."
+
+  + [[https://www.khronos.org/opengl/wiki/Image_Libraries][Image Libraries - OpenGL Wiki]]  / Khronos Group 
+
+  + [[https://stackoverflow.com/questions/27873784/when-do-i-need-to-use-an-opengl-function-loader][When do I need to use an OpenGL function loader? - Stack Overflow]]
+
+  + [[https://keyj.emphy.de/glext/][KeyJ's Blog : Blog Archive » Modern OpenGL with lcc-win32, the hard way]]
+
+  + [[https://apoorvaj.io/loading-opengl-without-glew/][Loading OpenGL without GLEW]] 
+
+  + [[https://www.libsdl.org/release/SDL-1.2.15/docs/html/guidevideoopengl.html][Using OpenGL With SDL]] - LibSDL
+
+  + [[https://www.khronos.org/opengl/wiki/Tutorial1:_Creating_a_Cross_Platform_OpenGL_3.2_Context_in_SDL_(C_/_SDL)][Tutorial1: Creating a Cross Platform OpenGL 3.2 Context in SDL (C / SDL) - OpenGL Wiki]]
+
+** Legacy/Obsolete OpenGL Subroutines
+
+The following OpenGL subroutines are from the OpenGL _immediate mode_
+(fixed-function pipeline), which are obsolete and should be avoided as
+they incur on a significant overhead and they lack portability due to
+not be available at OpenGL ES.
+
+  + Vertex:
+    + => Modern OpenGL replacement: VBO (Vertex Buffer Object) and VAO (Vertex Array Object)
+    + glVertex2f() 
+    + glVertex2f()
+    + glVertex3f()
+
+  + Begin/End:
+    + glEnd()
+    + glBegin()
+
+  + Colors
+    + glColor()   => Modern OpenGL replacement: Fragement shader 
+    + glMaterial()
+    + glVertexPointer() 
+
+  + Coordinate Transformation
+    + glLoadIdentity()  => Modern OpenGL replacement: glm::mat4(1.0);
+    + glRotate()        => Modern OpenGL replacement: glm::rotate();
+    + glTranslate()     => Modern OpenGL replacement: glm::translate();
+    + glScale()         => Modern OpenGL replacement: glm::scale();
+    + glRotate3f()
+    + glMatrixMode()
+    + glFrustum()       => Modern OpenGL replacement: glm::frustum();
+    + gluLookAt()       => Modern OpenGL replacement: glm::lookAt();
+    + gluPerspective()  => Modern OpenGL replacement: glm::perspective(); 
+
+  + Save Context 
+    + glPop()          
+    + glPush()
+    + glPushMatrix()
+    + glPopMatrix()
+** Library GLM - OpenGL Math 
+
+The library GLM (OpenGL math library) contains many classes and
+subroutines for computer graphics computations, such as: homogeneous
+coordinates; quaternios; 1D, 2D, 3D and homogeneous coordinates
+vectors; vector-matrix operations and so on. Aside those facilities,
+the library also provides the subroutines _glm::lookAt()_, for computing
+view matrix transform, that turns world coordinates into camera
+coordinates; _glm::perspective()_ - for computing the projection matrix,
+that turns camera coordinates into clip-space coordinates (NDC
+coordinates with range -1.0 to 1.0) and also _glm::ortho_ for computing
+the orthogonal perspective matrix.
+
+Web Site: 
+
+  + [[https://glm.g-truc.net/0.9.9/index.html][OpenGL Mathematics]] 
+
+Repository:
+
+  + https://github.com/g-truc/glm
+
+
+Type signature of most relevant GLM functions: 
+
+#+BEGIN_SRC cpp 
+   // ------ Basic Matrix Transformation =>> Useful for model matrix ---------------//
+   float     glm::radians(foat  degrees);
+   glm::mat4 glm::rotate   ( glm::mat4 const & m, float angle, glm::vec3 const & axis );
+   glm::mat4 glm::scale    ( glm::mat4 const & m, glm::vec3 const & factors           );
+   glm::mat4 glm::translate( glm::mat4 const & m, glm::vec3 const & translation       );
+
+
+   // ---- Camera and  Perspective transformation matrices -------------//
+   glm::mat4 glm::lookAt( glm::vec3 const & eye, glm::vec3 const & look, glm::vec3 const & up ); 
+   glm::mat4 glm::ortho( float left, float right, float bottom, float top, float near, float far );
+   glm::mat4 glm::ortho( float left, float right, float bottom, float top );
+   glm::mat4 glm::frustum( float left, float right, float bottom, float top, float near, float far );
+   glm::mat4 glm::perspective( float fovy, float aspect, float near, float far);
+#+END_SRC
+
+
+ *Downloading* 
+
+#+BEGIN_SRC sh 
+   $ mkdir -p /tmp/temp && cd /temp
+  
+   # Download source code archive 
+   $ >> curl -o glm.zip -L https://github.com/g-truc/glm/archive/master.zip
+
+   # Extract code 
+   $ >> unzip  glm.zip
+ 
+   # Enter the in the extracted directory 
+   $ >> cd glm-master/
+
+   # List directory content 
+   $ >> ls
+   cmake/  CMakeLists.txt  copying.txt  doc/  glm/  manual.md  readme.md  test/  util/
+#+END_SRC
+
+ *Load the library in CERN's ROOT repl* 
+
+#+BEGIN_SRC cpp 
+    $ >> ~/Applications/root/bin/root 
+   ERROR in cling::CIFactory::createCI(): cannot extract standard library include paths!
+   Invoking:
+     LC_ALL=C ccache  -O2 -DNDEBUG -xc++ -E -v /dev/null 2>&1 | sed -n -e '/^.include/,${' -e '/^ \/.*++/p' -e '}'
+   Results was:
+   With exit code 0
+      ------------------------------------------------------------------
+     | Welcome to ROOT 6.22/02                        https://root.cern |
+     | (c) 1995-2020, The ROOT Team; conception: R. Brun, F. Rademakers |
+     | Built for linuxx8664gcc on Aug 17 2020, 12:46:52                 |
+     | From tags/v6-22-02@v6-22-02                                      |
+     | Try '.help', '.demo', '.license', '.credits', '.quit'/'.q'       |
+      ------------------------------------------------------------------
+
+   root [0] 
+
+   root [0] .I . 
+
+   root [0] .I . 
+   root [1] #include <glm/glm.hpp>
+   root [2] #include <glm/gtc/matrix_transform.hpp>
+   root [3] #include <glm/gtc/type_ptr.hpp>
+   root [4] #include <glm/gtx/string_cast.hpp>
+
+   // Note: GLM matrices are stored in Column-major order 
+   void show_matrix(const char* label, glm::mat4 const& m){
+       std::cout << "\n [MATRIX] " << label << " = " << '\n';
+       std::cout << std::fixed << std::setprecision(3);
+       for(size_t i = 0; i < 4; i++)
+       {
+           for(size_t j = 0; j < 4; j++)
+           {
+               std::cout << std::setw(8) << m[j][i];
+           }
+           std::cout << '\n';
+       }
+   }
+#+END_SRC
+
+Define a 4x4 homogenous coordinate matrix: 
+
+#+BEGIN_SRC cpp 
+   root [18] glm::mat4 mat{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+   root [19] 
+   root [19] mat
+   (glm::mat4 &) @0x7f904e6c2008
+
+
+   // This matrix is not in the way the user expects as it is stored in column-major order 
+   // (data layout used by Fortran) and not row-major order (data layout used by C and C++).
+   root [20] show_matrix("mat", mat)
+
+    [MATRIX] mat = 
+      1.000   5.000   9.000  13.000
+      2.000   6.000  10.000  14.000
+      3.000   7.000  11.000  15.000
+      4.000   8.000  12.000  16.000
+   root [21] 
+
+   root [21] mat[0][0]
+   (float) 1.00000f
+
+   root [22] mat[0][1]
+   (float) 2.00000f
+
+   root [23] mat[0][2]
+   (float) 3.00000f
+
+   root [24] mat[0][3]
+   (float) 4.00000f
+
+   root [25] mat[3][3]
+   (float) 16.0000f
+
+   root [26] mat[2][0]
+   (float) 9.00000f
+
+   root [27] mat[2][1]
+   (float) 10.0000f
+#+END_SRC
+
+Obtain transpose matrix: 
+
+#+BEGIN_SRC cpp 
+  root [28] auto tmat = glm::transpose(mat)
+  (glm::mat<4, 4, float, glm::qualifier::packed_highp> &) @0x7f904e6c2058
+
+  root [29] show_matrix("tmat", tmat)
+
+   [MATRIX] tmat = 
+     1.000   2.000   3.000   4.000
+     5.000   6.000   7.000   8.000
+     9.000  10.000  11.000  12.000
+    13.000  14.000  15.000  16.000
+
+  root [33] tmat[0][0]
+  (float) 1.00000f
+
+  root [34] tmat[1][0]
+  (float) 2.00000f
+
+  root [35] tmat[2][0]
+  (float) 3.00000f
+
+  root [36] tmat[3][0]
+  (float) 4.00000f
+
+
+  root [37] tmat[0][0]
+  (float) 1.00000f
+
+  root [38] tmat[0][1]
+  (float) 5.00000f
+
+  root [39] tmat[0][2]
+  (float) 9.00000f
+
+  root [40] tmat[0][3]
+  (float) 13.0000f
+#+END_SRC
+
+Get pointer to first element: 
+
+#+BEGIN_SRC cpp 
+  root [41] float* ptr = glm::value_ptr(tmat)
+  (float *) 0x7f904e6c2058
+
+  root [42] ptr[0]
+  (float) 1.00000f
+
+  root [43] ptr[1]
+  (float) 5.00000f
+
+  root [44] ptr[2]
+  (float) 9.00000f
+
+  root [45] ptr[3]
+  (float) 13.0000f
+
+  root [46] ptr[4]
+  (float) 2.00000f
+
+  root [47] ptr[5]
+  (float) 6.00000f
+
+  root [48] ptr[6]
+  (float) 10.0000f
+
+  root [49] ptr[7]
+  (float) 14.0000f
+
+  root [50] ptr[8]
+  (float) 3.00000f
+#+END_SRC
+
+Null 4x4 matrix: 
+
+#+BEGIN_SRC cpp 
+   root [53] auto zero_4x4 = glm::mat4()
+   (glm::mat<4, 4, float, glm::qualifier::packed_highp> &) @0x7f904e6c20e0
+
+   root [54] show_matrix("zero_4x4", zero_4x4)
+
+    [MATRIX] zero_4x4 = 
+      0.000   0.000   0.000   0.000
+      0.000   0.000   0.000   0.000
+      0.000   0.000   0.000   0.000
+      0.000   0.000   0.000   0.000
+#+END_SRC
+
+Identity matrix: 
+
+#+BEGIN_SRC cpp 
+  root [55] auto id_4x4 = glm::mat4(1.0)
+  (glm::mat<4, 4, float, glm::qualifier::packed_highp> &) @0x7f904e6c2120
+  root [56] 
+  root [56] show_matrix("id_4x4", id_4x4)
+
+   [MATRIX] id_4x4 = 
+     1.000   0.000   0.000   0.000
+     0.000   1.000   0.000   0.000
+     0.000   0.000   1.000   0.000
+     0.000   0.000   0.000   1.000
+#+END_SRC
+
+Matrix translation coordinate transform: 
+
+#+BEGIN_SRC cpp 
+  root [58] auto t1 = glm::translate(id_4x4, glm::vec3(2.0, 10.0, 30.0))
+  (glm::mat<4, 4, float, glm::qualifier::packed_highp> &) @0x7f904e6c2160
+
+  root [59] show_matrix("t1", t1)
+
+   [MATRIX] t1 = 
+     1.000   0.000   0.000   2.000
+     0.000   1.000   0.000  10.000
+     0.000   0.000   1.000  30.000
+     0.000   0.000   0.000   1.000
+
+
+  root [62] auto t2 = glm::translate(t1, glm::vec3(-10, 100.0, 200.0))
+  (glm::mat<4, 4, float, glm::qualifier::packed_highp> &) @0x7f904e6c21a0
+
+  root [63] show_matrix("t2", t2)
+
+   [MATRIX] t2 = 
+     1.000   0.000   0.000  -8.000
+     0.000   1.000   0.000 110.000
+     0.000   0.000   1.000 230.000
+     0.000   0.000   0.000   1.000
+#+END_SRC
+
+Rotation around Z axis of 90 degrees: 
+
+  + glm::mat4 glm::rotate(glm::mat4 const& matrix, float angle_radians, glm::vec3 const& axis)
+  + Rotate around a given axis. The angle is given in radians.
+
+#+BEGIN_SRC cpp 
+  root [65] const auto axis_z = glm::vec3(0.0f, 0.0f, 1.0f);
+  root [66] const auto axis_y = glm::vec3(0.0f, 1.0f, 0.0f);
+  root [67] const auto axis_x = glm::vec3(1.0f, 0.0f, 0.0f);
+
+
+  /*          | cos(t)  -sin(t)   0   0  |
+   *          | sin(t)   cos(t)   0   0  |
+   *  Rz(t) = |  0        0       1   0  |
+   *          |  0        0       0   1  |
+   * 
+   *  
+   *  t_rotZ = Rz(90) x id_4x4 = Rz(90)
+   */
+  root [71] auto t_rotZ = glm::rotate(id_4x4, glm::radians(90.0f), axis_z)
+  (glm::mat<4, 4, float, glm::qualifier::packed_highp> &) @0x7f904e6c2204
+
+  root [72] show_matrix("t_rotZ", t_rotZ)
+
+   [MATRIX] t_rotZ = 
+    -0.000  -1.000   0.000   0.000
+     1.000  -0.000   0.000   0.000
+     0.000   0.000   1.000   0.000
+     0.000   0.000   0.000   1.000
+  root [73] 
+
+   root [96] glm::to_string(t_rotZ)
+   (std::string) "mat4x4((-0.000000, 1.000000, 0.000000, 0.000000), ... "
+   root [97] 
+#+END_SRC
+
+Scaling transformation: 
+
+#+BEGIN_SRC cpp 
+   root [75] auto s1 = glm::scale(id_4x4, glm::vec3(2.0, 2.0, 2.0))
+   (glm::mat<4, 4, float, glm::qualifier::packed_highp> &) @0x7f904e6c2244
+
+   root [76] show_matrix("s1", s1)
+
+    [MATRIX] s1 = 
+      2.000   0.000   0.000   0.000
+      0.000   2.000   0.000   0.000
+      0.000   0.000   2.000   0.000
+      0.000   0.000   0.000   1.000
+
+   root [78] s1 = glm::scale(s1, glm::vec3(5.0, 5.0, 5.0))
+   (glm::mat &) @0x7f904e6c2244
+
+   root [79] show_matrix("s1", s1)
+
+    [MATRIX] s1 = 
+     10.000   0.000   0.000   0.000
+      0.000  10.000   0.000   0.000
+      0.000   0.000  10.000   0.000
+      0.000   0.000   0.000   1.000
+   root [80] 
+
+   // Apply transform to vector: 
+
+   root [82] auto res = s1 * glm::vec4(2.0, 5.0, 10.0, 1.0)
+   (glm::vec<4, float, glm::qualifier::packed_highp> &) @0x7f904e6c2284
+
+   root [91] glm::to_string(res)
+   (std::string) "vec4(20.000000, 50.000000, 100.000000, 1.000000)"
+
+   root [92] res[0]
+   (float) 20.0000f
+
+   root [93] res[1]
+   (float) 50.0000f
+
+   root [94] res[2]
+   (float) 100.000f
+
+   root [95] res[3]
+   (float) 1.00000f
+#+END_SRC
+
+Scaling transformation: 
+
+#+BEGIN_SRC cpp 
+   root [97] auto s = glm::scale(id_4x4, glm::vec3(4.0, 5.0, 6.0))
+   (glm::mat<4, 4, float, glm::qualifier::packed_highp> &) @0x7f904e6c22a4
+
+   root [98] show_matrix("s", s)
+
+    [MATRIX] s = 
+      4.000   0.000   0.000   0.000
+      0.000   5.000   0.000   0.000
+      0.000   0.000   6.000   0.000
+      0.000   0.000   0.000   1.000
+   root [99] 
+   root [99] s = glm::translate(s, glm::vec3(4, -5, 9))
+   (glm::mat &) @0x7f904e6c22a4
+
+
+   root [100] show_matrix("s", s)
+
+    [MATRIX] s = 
+      4.000   0.000   0.000  16.000
+      0.000   5.000   0.000 -25.000
+      0.000   0.000   6.000  54.000
+      0.000   0.000   0.000   1.000
+   root [101] 
+
+
+   root [105] s = glm::scale(s, glm::vec3(5.0, 2.0, 3.0))
+   (glm::mat &) @0x7f904e6c22a4
+
+
+   root [106] show_matrix("s", s)
+
+    [MATRIX] s = 
+     25.000   0.000   0.000  20.000
+      0.000   4.000   0.000 -10.000
+      0.000   0.000   9.000  27.000
+      0.000   0.000   0.000   1.000
+#+END_SRC
+
+Inverse matrix: 
+
+#+BEGIN_SRC cpp 
+   root [111] show_matrix("s", s)
+
+    [MATRIX] s = 
+     25.000   0.000   0.000  20.000
+      0.000   4.000   0.000 -10.000
+      0.000   0.000   9.000  27.000
+      0.000   0.000   0.000   1.000
+
+   root [112] inv_s = glm::inverse(s)
+   (glm::mat<4, 4, float, glm::qualifier::packed_highp> &) @0x7f904e6c2324
+
+   root [113] show_matrix("inv_s", inv_s)
+
+    [MATRIX] inv_s = 
+      0.040  -0.000   0.000  -0.800
+     -0.000   0.250  -0.000   2.500
+      0.000  -0.000   0.111  -3.000
+     -0.000   0.000  -0.000   1.000
+   root [114] 
+   root [114] 
+
+#+END_SRC
+** 2D graphics - no VBO abstraction 
+
+The following code draws a square and a triangle using the OpenGL
+retained mode API. Before the rendering takes place, data must be
+upload to the VBO (Vertex Buffer Object), allocated on the GPU-side,
+via _glBufferData()_ call that sends the data to the previous bound VBO
+through _glBindBuffer()_ call. Then, on the rendering loop and on every
+frame, the buffer data layout must described with
+_glVertexAttribPointer()_ before drawing via call to _glDrawArrays()_
+subroutine, which draw vertices from the current bound buffer. 
+
+Subroutines that modifies global state may cause unintended behavior,
+so it is a good practice to unset the affected global state when the
+current global state is no longer needed. For instance, if the current
+VBO no longer needs to be bound, this global state can be disabled by
+calling /glBindBuffer(GL_ARRAY_BUFFER, 0)/.
+
+
+OpenGL subroutines used: 
+
+ + [[https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGenBuffers.xhtml][glGenBuffers()]] => Instantiate a buffer object. 
+
+#+BEGIN_SRC cpp 
+  void glGenBuffers(GLsizei n, GLuint* buffers);
+#+END_SRC
+
+ + [[https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBindBuffer.xhtml][glBindBuffer()]] => Bind some buffer object, a.k.a enable, only one
+   buffer can be bound at a time. (The VBO is a global state). 
+
+#+BEGIN_SRC cpp 
+  void glBindBuffer(GLenum target,nt buffer);
+#+END_SRC
+
+ + [[https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBufferData.xhtml][glBufferData()]]  =>> Send data to current bound buffer object that
+   was bound via glBindBuffer() call. 
+
+#+BEGIN_SRC cpp 
+  void glBufferData( GLenum      target,
+                     GLsizeiptr  size,
+                     const void* data,
+                     GLenum      usage
+                     );
+#+END_SRC
+
+  + [[https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glEnableVertexAttribArray.xhtml][glEnableVertexAttribArray()]] 
+
+#+BEGIN_SRC cpp 
+  void glEnableVertexAttribArray(GLuint index);
+#+END_SRC
+
+ + [[https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttribPointer.xhtml][glVertexAttribPointer()]]
+   + Describes the data layout of current bound buffer. 
+
+#+BEGIN_SRC cpp 
+     void glVertexAttribPointer( GLuint      index,
+                                 GLint       size,
+                                 GLenum      type,
+                                 GLboolean   normalized,
+                                 GLsizei     stride,
+                                 const void* pointer);
+#+END_SRC
+
+  + [[https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDrawArrays.xhtml][glDrawArrays()]] => Render OpenGL primitives from current bound
+    buffer object's data. Those primitives are: lines, triangles or
+    quads and so on.  
+
+#+BEGIN_SRC cpp 
+  void glDrawArrays(GLenum mode, GLint first, GLsizei count);
+#+END_SRC
+
+
+  *Screenshot* 
+
+[[file:images/opengl-draw2d-raw.png][file:images/opengl-draw2d-raw.png]]
+
+  *Source Code* 
+
+File: _CMakeLists.txt_ 
+
+#+BEGIN_SRC cmake 
+  cmake_minimum_required(VERSION 3.5)
+  project(GLFW_project)
+
+  set(CMAKE_CXX_STANDARD 17)
+  set(CMAKE_CXX_STANDARD_REQUIRED ON)
+  set(CMAKE_VERBOSE_MAKEFILE ON)
+
+  #================ GLFW Settings  ===============#
+
+  find_package(OpenGL REQUIRED)
+
+  include(FetchContent)
+
+  # Set GLFW Options before FectchContent_MakeAvailable 
+  set( GLFW_BUILD_EXAMPLES OFF CACHE BOOL  "GLFW lib only" )
+  set( GLFW_BUILD_TESTS    OFF CACHE BOOL  "GLFW lib only" )
+  set( GLFW_BUILD_DOCS     OFF CACHE BOOL  "GLFW lib only" )
+  set( GLFW_BUILD_INSTALL  OFF CACHE BOOL  "GLFW lib only" )
+
+  # Donwload GLFW library
+  FetchContent_Declare(
+    glfwlib
+    URL   https://github.com/glfw/glfw/releases/download/3.3.2/glfw-3.3.2.zip
+  )
+  FetchContent_MakeAvailable(glfwlib)
+
+         add_executable( draw2d-raw  draw2d-raw.cpp )
+  target_link_libraries( draw2d-raw  glfw OpenGL::GL GLU)
+#+END_SRC
+
+File: _draw2d-raw.cpp_ 
+
+#+BEGIN_SRC cpp 
+  // Draw curve mapping buffer to the GPU.
+  #include <iostream>
+  #include <vector> 
+  #include <array>
+  #include <cmath>
+  #include <cassert>
+
+  // -------- OpenGL headers ---------//
+  //
+  #define GL_GLEXT_PROTOTYPES 1 // Necessary for OpenGL >= 3.0 functions
+  #define GL3_PROTOTYPES      1 // Necessary for OpenGL >= 3.0 functions
+
+  #include <GL/gl.h>
+  #include <GLFW/glfw3.h>
+
+  // #include <GL/glew.h>
+  #include <GL/glu.h>
+  #include <GL/glut.h>
+
+
+  struct Vertex2D
+  {
+      GLfloat x;
+      GLfloat y;
+  };
+
+  int main(int argc, char** argv)
+  {
+      GLFWwindow* window;
+
+      /* Initialize the library */
+      if (!glfwInit())
+          return -1;
+
+      glutInit(&argc, argv);
+
+      /* Create a windowed mode window and its OpenGL context */
+      window = glfwCreateWindow(640, 480, "2D Drawing raw VBO buffers", NULL, NULL);
+      if (!window)
+      {
+          glfwTerminate();
+          return -1;
+      }
+
+      /* Make the window's context current */
+      glfwMakeContextCurrent(window);
+      // glClearColor(0.0f, 0.5f, 0.6f, 1.0f);
+      glClearColor(0.0f, 0.0f, 0.0, 1.0f);
+
+
+      Vertex2D triangle_points[3] = {
+          Vertex2D{-0.25,   -0.25}
+        , Vertex2D{ 0.00,   0.25}
+        , Vertex2D{ 0.25,  -0.25}
+      };
+
+      Vertex2D square_points[4] = {
+          { -0.3,  -0.3 }
+        , { -0.3,   0.3 }
+        , {  0.3,   0.3 }
+        , {  0.3,  -0.3 }
+      };
+
+      // ================== Triangle Buffer ====================//
+      //
+
+      GLuint vbo_triangle_ = 0;
+    
+      // Create an OpenGL VBO buffer 
+      // =>> void glGenBuffers (GLsizei n, GLuint *buffers);
+      glGenBuffers(  1                // Number of buffers that will be instantiated
+                   , &vbo_triangle_   // Address of first element or address of array 
+                                      // that results will be written to.
+                   );
+      assert( vbo_triangle_ != 0 );
+
+      // Set this buffer as the current buffer - Only one buffer can be bound at a time. 
+      // =>> void glBindBuffer (GLenum target, GLuint buffer)
+      glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle_);
+
+      // Upload data to current VBO buffer in GPU 
+      glBufferData(GL_ARRAY_BUFFER, sizeof(triangle_points), triangle_points, GL_STATIC_DRAW);   
+
+      // Unbind current buffer in order to avoid unintended behaviors
+      // as the subroutine glBindBuffer() modifies has a global state.
+      glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+      // ================ Square / Vertex Buffer Object 2 ==================//
+      //      
+
+      GLuint vbo_square_ = 0;
+      // Instiate buffer - gets a handle or token for 
+      // a buffer allocated on GPU-side.
+      glGenBuffers(1, &vbo_square_);
+      // Check for error 
+      assert( vbo_square_ != 0);
+      // Bind Current buffer (Affects global state)
+      glBindBuffer(GL_ARRAY_BUFFER, vbo_square_);
+      // Upload data to the GPU 
+      glBufferData(GL_ARRAY_BUFFER, sizeof(square_points), square_points, GL_STATIC_DRAW);   
+      // Unbind buffer 
+      glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+      GLint shader_attr = 0;
+
+      //  ======= R E N D E R  - L O O P ============//
+      //
+      while ( !glfwWindowShouldClose(window) )
+      {
+          glClear(GL_COLOR_BUFFER_BIT);
+
+          // ====== BEGIN RENDERING ============//
+
+              // ------------ Draw triangle --------------//
+              //
+              glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle_);
+              glEnableVertexAttribArray(shader_attr);
+
+              // Describe buffer data layout (binary layout)
+              // =>> glVertexAttribPointer ( GLuint index, GLint size, GLenum type
+              //                           , GLboolean normalized, GLsizei stride, const void *pointer);
+              //
+              glVertexAttribPointer(shader_attr // GLint  index         => Shader attribute location, 0 for now 
+                                  , 2           // GLint  size          => 2 components (X, Y) of type GLfloat
+                                  , GL_FLOAT    // GLemum type          => Type of each component  
+                                  , GL_FALSE    // GLboolean normalized  
+                                  , 0           // GLsizei stride
+                                  , nullptr     // const void* pointer 
+                                  );
+              // Draw arrays using the content of buffer 
+              // Plot 1 triangle (each triangle has 3 vertices)
+              glDrawArrays(GL_TRIANGLES, 0, 3);
+
+              // Disable global state 
+              glBindBuffer(GL_ARRAY_BUFFER, 0);
+              glDisableVertexAttribArray(0);
+            
+              //------------ Draw Square -------------------------//
+              //
+            
+              #if 1
+              glBindBuffer(GL_ARRAY_BUFFER, vbo_square_);
+              glEnableVertexAttribArray(shader_attr);
+              glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+              // Plot 4 vertices 
+              glDrawArrays(GL_LINE_LOOP, 0, 4);
+
+              // Disable global state 
+              glBindBuffer(GL_ARRAY_BUFFER, 0);
+              glDisableVertexAttribArray(shader_attr);            
+              #endif 
+
+          // ====== END RENDERING ==============//
+
+          /* Swap front and back buffers */
+          glfwSwapBuffers(window);
+          /* Poll for and process events */
+          glfwPollEvents();
+
+          if( glfwGetKey(window, 'Q' ) == GLFW_PRESS )
+          {
+               std::cout << " [TRACE] User typed Q =>> Shutdown program. Ok. " << '\n';
+               break;
+          }
+      }
+
+      glfwTerminate();
+      return 0;
+  }
+#+END_SRC
+
+** 2D graphics - using VBO abstraction
+
+This sample code draws a square, triangle and a chart using 2D
+coordinates and ignoring the Z axis. 
+
+Unlike legacy OpenGL (fixed-pipeline) that requires the calling code
+to call primitive rendering subroutines on every frame, which has a
+significant overhead, Modern OpenGL or retained-mode, uses buffer
+objects for storing data on the GPU memory and shaders, programs that
+runs on the GPU-side for processing vertexes and colors. The following
+code uses _VertexBufferObject_ class for encapsulating VBO - Vertex
+Buffer Objects. The challenging of dealing with VBOs is that, many of
+subroutines applicable to VBO modify global state or assume that some
+global state should be set before calling the subroutine. The effect
+of calling the many OpenGL subroutines depends on the state and the
+order that they were called.
+
+The code was tested on Ubuntu Linux 64 bits. On Windows, it requires
+GLEW for loading OpenGL function pointers. 
+
+ *Screenshot:*
+
+#+CAPTION: OpenGL simple 2D redering with VBO. 
+[[file:images/opengl-draw2d.png][file:images/opengl-draw2d.png]]
+
+
+ *Source Code* 
+
+
+File: _CMakeLists.txt_ 
+
+#+BEGIN_SRC cmake 
+  cmake_minimum_required(VERSION 3.5)
+  project(draw2d)
+
+  set(CMAKE_CXX_STANDARD 17)
+  set(CMAKE_CXX_STANDARD_REQUIRED ON)
+  set(CMAKE_VERBOSE_MAKEFILE ON)
+
+  #================ GLFW Settings  ===============#
+
+  find_package(OpenGL REQUIRED)
+
+  include(FetchContent)
+
+  # Set GLFW Options before FectchContent_MakeAvailable 
+  set( GLFW_BUILD_EXAMPLES OFF CACHE BOOL  "GLFW lib only" )
+  set( GLFW_BUILD_TESTS    OFF CACHE BOOL  "GLFW lib only" )
+  set( GLFW_BUILD_DOCS     OFF CACHE BOOL  "GLFW lib only" )
+  set( GLFW_BUILD_INSTALL  OFF CACHE BOOL  "GLFW lib only" )
+
+  # Donwload GLFW library
+  FetchContent_Declare(
+    glfwlib
+    URL   https://github.com/glfw/glfw/releases/download/3.3.2/glfw-3.3.2.zip
+  )
+  FetchContent_MakeAvailable(glfwlib)
+
+         add_executable( draw2d  draw2d.cpp )
+  target_link_libraries( draw2d  glfw OpenGL::GL GLU)
+#+END_SRC
+
+File: _draw2d.cpp_ 
+
+#+BEGIN_SRC cpp 
+  // Draw curve mapping buffer to the GPU.
+  #include <iostream>
+  #include <vector> 
+  #include <array>
+  #include <cmath>
+
+  // -------- OpenGL headers ---------//
+  //
+  #define GL_GLEXT_PROTOTYPES 1 // Necessary for OpenGL >= 3.0 functions
+  #define GL3_PROTOTYPES      1 // Necessary for OpenGL >= 3.0 functions
+
+  #include <GL/gl.h>
+  #include <GLFW/glfw3.h>
+
+  // #include <GL/glew.h>
+  #include <GL/glu.h>
+  #include <GL/glut.h>
+
+  // Makes a class non copiable. 
+  // Auomates the boilerplate code for 
+  // declaring a class as non-copiable 
+  #define CL_NON_COPIABLE( className )                  \
+      public:                                           \
+      className( className const&) = delete;            \
+      className& operator= (className const&) = delete; \
+      private:
+
+
+  // Class for encapsulating VBO - Vertex-Buffer Objects 
+  class VertexBufferObject
+  {
+      // Handle for Vertex-Buffer Object (Allocated on GPU memory)
+      GLuint  m_vbo = 0;
+      // Shader attribute location variable 
+      GLuint m_attr_location;
+
+      // Type of single component 
+      GLenum  m_type;
+      // Number of elements m_type of single component 
+      GLsizei m_size;    
+
+      CL_NON_COPIABLE(VertexBufferObject)
+  public:
+
+      VertexBufferObject(GLuint shader_attr_loc = 0)
+      { 
+          m_attr_location = shader_attr_loc;
+          ::glGenBuffers(1, &m_vbo);  
+
+          // --- Buffer Object Data Layout parameters ------//
+          //
+          // Type of single component 
+          GLenum  m_type;
+          // Number of elements m_type of single component 
+          GLsizei m_size;        
+      }
+
+      // Destructor 
+      ~VertexBufferObject(){ this->dispose();  }
+
+      GLuint id() const { return m_vbo; }
+
+      // Delete current buffer when no longer in use 
+      void dispose() 
+      {
+          ::glDeleteBuffers(1, &m_vbo);
+          m_vbo = 0;
+      }
+
+      // Make this buffer active only one buffer can be active at a time.
+      void bind() 
+      { 
+          glBindBuffer(GL_ARRAY_BUFFER, m_vbo); 
+          glEnableVertexAttribArray(m_attr_location);
+       }
+
+      // Unbind current buffer in order to avoid unintended behavior 
+      // due to the global state. 
+      void unbind() 
+      { 
+          glBindBuffer(GL_ARRAY_BUFFER, 0); 
+          glDisableVertexAttribArray(m_attr_location);
+      }
+
+      // Upload data to GPU - the data is often an array of POD types 
+      // POD (Plain-Old-Data) - any contiguous data without any internal pointer.
+      void send_data(void* pData, GLsizeiptr size)
+      {
+          this->bind();    
+          glBufferData(GL_ARRAY_BUFFER, size, pData, GL_STATIC_DRAW);
+          this->unbind();
+      }
+
+      // Map buffer to GPU memory. This method allows sending data directly 
+      // to the VBO by writing to the returned pointer.
+      // 
+      // @param size - Byte amount of memory allocated on the GPU-side.
+      void* map_buffer(GLsizeiptr size)
+      {
+          this->bind();
+          // Just reserver data, do not copy vertex points to GPU memory. 
+          glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_STATIC_DRAW);   
+          // Obtain pointer to buffer mapped to GPU memory.
+          void* ptr = glMapBuffer( GL_ARRAY_BUFFER, GL_WRITE_ONLY );
+          this->unbind();
+          return ptr;
+      }
+
+      template<typename T>
+      T* map_buffer_t(GLsizeiptr size)
+      { 
+          return reinterpret_cast<T*>(this->map_buffer(size));
+      }
+
+      // Note: It is assumed that shader program is bound before 
+      // calling this function. 
+      //
+      // shader_attr_location => Is attribute location of the Vertex Shader
+      // that will process the vertices.
+      void set_data_layout( GLenum type, GLint size) 
+      {
+          m_type = type; 
+          m_size = size;
+      }
+
+      void draw_arrays(GLenum draw_type, GLuint count)
+      {
+          this->bind();
+          // Describe data layout - binary format.
+          glVertexAttribPointer( m_attr_location, m_size, m_type, GL_FALSE, 0, nullptr);
+          // Performs drawing 
+          glDrawArrays( draw_type, 0, count);
+          this->unbind();
+      }
+  };
+
+  struct Vertex2D
+  {
+      GLfloat x;
+      GLfloat y;
+  };
+
+  int main(int argc, char** argv)
+  {
+      GLFWwindow* window;
+
+      /* Initialize the library */
+      if (!glfwInit())
+          return -1;
+
+      glutInit(&argc, argv);
+
+      /* Create a windowed mode window and its OpenGL context */
+      window = glfwCreateWindow(640, 480, "Sample 2D Drawing", NULL, NULL);
+      if (!window)
+      {
+          glfwTerminate();
+          return -1;
+      }
+
+      /* Make the window's context current */
+      glfwMakeContextCurrent(window);
+      // glClearColor(0.0f, 0.5f, 0.6f, 1.0f);
+      glClearColor(0.0f, 0.0f, 0.0, 1.0f);
+
+      constexpr size_t NPOINTS = 2000;
+
+      //------------- Vertex Buffer Object 1 -----------//
+      // => Note: anything vertex should be within the range -1.0 to 1.0 
+
+      VertexBufferObject vbo_chart{};
+      // Describe layout.
+      // Each vertex has 2 components (X, Y) of type GL_FLOAT 
+      vbo_chart.set_data_layout(GL_FLOAT, 2);
+
+      Vertex2D* chart = vbo_chart.map_buffer_t<Vertex2D>( NPOINTS * sizeof(Vertex2D) );
+
+      float x = 0.0;
+
+      //  Write data directly on GPU memory without copying any 
+      //  pre-allocated buffer on main-memory.
+      for(size_t k = 0; k < NPOINTS; k++)
+      {
+          x = (k - 1000.0) / 100.0;
+          chart[k].x = x;
+          chart[k].y = sin(x * 10.0) / (1.0 + x * x);
+      }
+
+      // ------------- Triangle / Vertex Buffer Object 2 ------------//
+      //      
+    
+      Vertex2D triangle_points[3] = {
+          Vertex2D{-0.25,   -0.25 }
+        , Vertex2D{ 0.00,    0.25 }
+        , Vertex2D{ 0.25,   -0.25 }
+      };
+
+      VertexBufferObject vbo_triangle{};
+      // Each vertex has 2 coordinates of type GL_FLOAT 
+      vbo_triangle.set_data_layout(GL_FLOAT, 2);
+      // Upload data to GPU 
+      vbo_triangle.send_data(triangle_points, sizeof(triangle_points));
+
+
+      // ---------- Square / Vertex Buffer Object 2 ------------//
+      //      
+    
+      Vertex2D square_points[4] = {
+          { -0.3,  -0.3 }
+        , { -0.3,   0.3 }
+        , {  0.3,   0.3 }
+        , {  0.3,  -0.3 }
+      };
+
+      auto vbo_square = VertexBufferObject{};
+      vbo_square.set_data_layout(GL_FLOAT, 2);
+      // Upload data to GPU 
+      vbo_square.send_data(square_points, sizeof(square_points));
+
+
+      //  ======= R E N D E R  - L O O P ============//
+      //
+      while ( !glfwWindowShouldClose(window) )
+      {
+          glClear(GL_COLOR_BUFFER_BIT);
+
+          // ====== BEGIN RENDERING ============//
+        
+          vbo_chart.draw_arrays(GL_LINE_STRIP, NPOINTS);
+          vbo_triangle.draw_arrays(GL_TRIANGLES, 3);
+          vbo_square.draw_arrays(GL_LINE_LOOP, 4);
+
+          // ====== END RENDERING ==============//
+
+          /* Swap front and back buffers */
+          glfwSwapBuffers(window);
+          /* Poll for and process events */
+          glfwPollEvents();
+
+          if( glfwGetKey(window, 'Q' ) == GLFW_PRESS )
+          {
+               std::cout << " [TRACE] User typed Q =>> Shutdown program. Ok. " << '\n';
+               break;
+          }
+      }
+
+      glfwTerminate();
+      return 0;
+  }
+#+END_SRC
+** 2D graphics - using VAO 
+
+A VAO (Vertex Array Object) is an object that stores all the
+information necessary to render a VBO (Vertex Buffer Object). For
+instance, a VAO allows rendering the data, by performing the following
+set of operations only once: 1 - binding the VAO; 2 - binding the
+buffer via glBindBuffer() call; 3 - enabling the vertex attribute via
+glEnableVertexAttribArray(); 4 - setting the data layout by calling
+glVertexAttribPointer() subroutine. Without a VAO, all those
+subroutines would need to be called on every frame rendering.
+
+Algorithm for VAO usage: 
+
+ + Setup 
+
+#+BEGIN_SRC cpp 
+   // Shader attribute location 
+   GLint shader_attr = 1;
+
+   // -------------- Setup VAO --------------------// 
+   // 
+   GLuint vao;
+   glGenVertexArrays(1, &vao); // Instantiate VAO 
+
+   GLuint vbo;
+   glGenBuffers(1, &vbo);              
+   // Bind VBO (Recorded by VAO)
+   glBindBuffer(GL_ARRAY_BUFFER, vbo); 
+
+   // Upload data to GPU 
+   glBufferData(GL_ARRAY_BUFFER, buffer_size, buffer, GL_STATIC_DRAW);  
+
+   glEnableVertexAttribArray(shader_attr);
+
+   // Set buffer data layout (Recorded by VAO)
+   glVertexAttribPointer(shader_attr, size, type, GL_FALSE, 0, nullptr);    
+
+   // ------- Disable Global state ---------// 
+
+   // Unbind VAO 
+   glBindVertexArray(0);
+   // Unbind VBO 
+   glBindBuffer(GL_ARRAY_BUFFER, vbo);
+   // Disable current shader attribute 
+   glDisableVertexAttribArray(shader_attr);
+#+END_SRC
+
+ + Rendering loop 
+
+#+BEGIN_SRC cpp 
+         ... ...         ... ...         ... ...
+         ... ...         ... ...         ... ...      
+
+    //  ======= R E N D E R  - L O O P ============//
+    //                                             //
+    while ( !glfwWindowShouldClose(window) )
+    {
+        glClear(GL_COLOR_BUFFER_BIT);
+         ... ...         ... ...         ... ...
+         ... ...         ... ...         ... ...
+
+         glBindVertexArray(vao);
+         glDrawArrays(GL_LINE_LOOP, 0, NUMBER_OF_VERTICES);
+
+         glBindVertexArray(vao1);
+         glDrawArrays(GL_LINE_TRIANGLES, 0, NUMBER_OF_VERTICES_1);
+
+         glBindVertexArray(vao2);
+         glDrawArrays(GL_LINES, 0, NUMBER_OF_VERTICES_2);
+
+         ... ...         ... ...         ... ...
+         ... ...         ... ...         ... ...
+
+        /* Swap front and back buffers */
+        glfwSwapBuffers(window);
+        /* Poll for and process events */
+        glfwPollEvents();
+    }
+#+END_SRC
+
+
+ *Further Reading* 
+
+  + [[https://www.khronos.org/opengl/wiki/Tutorial2:_VAOs,_VBOs,_Vertex_and_Fragment_Shaders_(C_/_SDL)][Tutorial2: VAOs, VBOs, Vertex and Fragment Shaders (C / SDL) - OpenGL Wiki]]
+
+  + [[https://android-developers.googleblog.com/2015/10/game-performance-vertex-array-objects.html][Android Developers Blog: Game Performance: Vertex Array Objects]]
+
+  + [[https://android-developers.googleblog.com/2015/03/today-we-want-to-share-some-best.html][Android Developers Blog: Game Performance: Layout Qualifiers]]
+
+  + [[https://stackoverflow.com/questions/28270954/process-of-setting-up-a-vao-in-opengl][c++ - Process of setting up a VAO in OpenGL - Stack Overflow]]
+
+  + [[https://stackoverflow.com/questions/8923174/opengl-vao-best-practices][OpenGL VAO best practices - Stack Overflow]]
+
+  + [[https://computergraphics.stackexchange.com/questions/5895/what-is-an-opengl-vao-in-a-nutshell][vertex buffer object - What is an OpenGL VAO in a nutshell?]]  -
+    Computer Graphics Stack Exchange 
+
+  + [[https://gamedev.stackexchange.com/questions/92832/in-opengl-whats-quicker-lots-of-smaller-vaos-or-one-large-one-updated-each-fr][performance - In OpenGL what's quicker]] - , lots of smaller VAOs,
+    or one large one updated each frame? - Game Development Stack
+    Exchange.
+
+  + [[https://stackoverflow.com/questions/18485381/opengl-how-many-vaos][OpenGL How Many VAOs - Stack Overflow]] 
+
+ 
+  *Screenshot* 
+
+#+CAPTION: 2D OpenGL draw using VAO - Vertex Array Object 
+[[file:images/opengl-draw2-vao.png][file:images/opengl-draw2-vao.png]]
+ 
+  *Sample Code* 
+
+File: CMakeLists.txt 
+
+#+BEGIN_SRC cmake 
+    cmake_minimum_required(VERSION 3.5)
+    project(draw2d)
+
+    set(CMAKE_CXX_STANDARD 17)
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
+    set(CMAKE_VERBOSE_MAKEFILE ON)
+
+    #================ GLFW Settings  ===============#
+
+    find_package(OpenGL REQUIRED)
+
+    include(FetchContent)
+
+    # Set GLFW Options before FectchContent_MakeAvailable 
+    set( GLFW_BUILD_EXAMPLES OFF CACHE BOOL  "GLFW lib only" )
+    set( GLFW_BUILD_TESTS    OFF CACHE BOOL  "GLFW lib only" )
+    set( GLFW_BUILD_DOCS     OFF CACHE BOOL  "GLFW lib only" )
+    set( GLFW_BUILD_INSTALL  OFF CACHE BOOL  "GLFW lib only" )
+
+    # Donwload GLFW library
+    FetchContent_Declare(
+      glfwlib
+      URL   https://github.com/glfw/glfw/releases/download/3.3.2/glfw-3.3.2.zip
+    )
+    FetchContent_MakeAvailable(glfwlib)
+
+           add_executable( draw2d-vao  draw2d-vao.cpp )
+    target_link_libraries( draw2d-vao  glfw OpenGL::GL GLU)
+#+END_SRC
+
+File: _draw2d-vao.cpp_ 
+
+#+BEGIN_SRC cpp 
+  // Draw curve mapping buffer to the GPU.
+  #include <iostream>
+  #include <vector> 
+  #include <array>
+  #include <cmath>
+  #include <cassert>
+
+  // -------- OpenGL headers ---------//
+  //
+  #define GL_GLEXT_PROTOTYPES 1 // Necessary for OpenGL >= 3.0 functions
+  #define GL3_PROTOTYPES      1 // Necessary for OpenGL >= 3.0 functions
+
+  #include <GL/gl.h>
+  #include <GLFW/glfw3.h>
+
+  // #include <GL/glew.h>
+  #include <GL/glu.h>
+  #include <GL/glut.h>
+
+
+  struct Vertex2D
+  {
+      GLfloat x;
+      GLfloat y;
+  };
+
+  // Upload buffer from main memory to GPU VBO 
+  // =>> Parameters VAO, VBO are allocated by the caller. 
+  void send_buffer(   GLuint* pVao        // Pointer to VAO (Vertex Array Object) - allocated by caller 
+                    , GLuint* pVbo        // Pointer to VBO (Vertex Buffer Object) - allocated by caller
+                    , GLsizei sizeBuffer  // Total buffer size in bytes
+                    , void*   pBufffer    // Pointer to buffer 
+                    , GLint   shader_attr // Shader attribute location 
+                    , GLint   size        // Number of coordinates of a given vertex                  
+                    , GLenum  type        // Type of each element coordinate 
+                    );
+
+  void* map_buffer( GLuint* pVao         // Pointer to VAO - allocated by calling code.
+                  , GLuint* pVbo         // Pointer to VBO - allocated by calling code.
+                  , GLsizei data_size    // Total size in bytes that is allocated to buffer 
+                  , GLint   shader_attr  // Shadder attribute location id (0 - zero) is there is no shader.
+                  , GLint   size         // Number of component of each vertex 
+                  , GLenum  type         // Type of each vertex element 
+                  );
+
+
+  int main(int argc, char** argv)
+  {
+      GLFWwindow* window;
+
+      /* Initialize the library */
+      if (!glfwInit())
+          return -1;
+
+      glutInit(&argc, argv);
+
+      /* Create a windowed mode window and its OpenGL context */
+      window = glfwCreateWindow(640, 480, "2D Drawing using VAO", NULL, NULL);
+      if (!window)
+      {
+          glfwTerminate();
+          return -1;
+      }
+
+      /* Make the window's context current */
+      glfwMakeContextCurrent(window);
+      // glClearColor(0.0f, 0.5f, 0.6f, 1.0f);
+      glClearColor(0.0f, 0.0f, 0.0, 1.0f);
+
+      // Shader attribute location (default 0)
+      GLint shader_attr = 0;
+
+    
+      // ================ Square / Vertex Buffer Object 2 ==================//
+      //      
+
+      Vertex2D square_points[4] = {
+          { -0.3,  -0.3 }
+        , { -0.3,   0.3 }
+        , {  0.3,   0.3 }
+        , {  0.3,  -0.3 }
+      };
+
+      GLuint vao_square = 0; 
+      GLuint vbo_square = 0;
+
+      // Upload square_points buffer data to GPU 
+      send_buffer( &vao_square, &vbo_square, sizeof(square_points)
+                  , square_points, shader_attr, 2, GL_FLOAT );
+    
+      assert( vao_square != 0 );
+      assert( vbo_square != 0 );    
+    
+      std::fprintf( stderr, " [TRACE] vao_square = %d, vbo_square = %d \n"
+                   , vao_square, vbo_square);
+
+
+      // ============== Circle / Vertex Buffer Object 3 ==================//
+      //      
+      GLuint vao_circle = 0; 
+      GLuint vbo_circle = 0;
+    
+      // Number of vertices to used to render the circle. 
+      constexpr size_t N_CIRCLE = 100;
+      constexpr float  PI       = 3.1415927;
+      const     float  radius   = 0.75;
+
+      // C-style cast should not be used here 
+      Vertex2D* pCursor = (Vertex2D*) map_buffer( &vao_circle, &vbo_circle, N_CIRCLE * sizeof(Vertex2D)
+                                                , shader_attr, 2, GL_FLOAT );
+
+      float angle = 0.0;
+      const float step = 2 * PI / N_CIRCLE;
+
+      for(size_t n = 0; n < N_CIRCLE; n++)
+      {
+          pCursor[n].x = radius * cosf( angle );
+          pCursor[n].y = radius * sinf( angle );
+          angle = angle + step;
+      }
+ 
+
+      //  ======= R E N D E R  - L O O P ============//
+      //                                             //
+      while ( !glfwWindowShouldClose(window) )
+      {
+          glClear(GL_COLOR_BUFFER_BIT);
+
+          // ====== BEGIN RENDERING ============//
+
+              //------------ Draw Square -------------------------//
+              //            
+               glBindVertexArray(vao_square);
+              // Plot 4 vertices 
+              glDrawArrays(GL_LINE_LOOP, 0, 4);
+              // Unbind vao (restore global state to default value)
+              glBindVertexArray(0);
+
+              //------------ Draw Circle -------------------------//
+              //            
+              glBindVertexArray(vao_circle);
+              glDrawArrays(GL_LINE_LOOP, 0, N_CIRCLE);
+              glBindVertexArray(0);
+
+          // ====== END RENDERING ==============//
+
+          /* Swap front and back buffers */
+          glfwSwapBuffers(window);
+          /* Poll for and process events */
+          glfwPollEvents();
+
+          if( glfwGetKey(window, 'Q' ) == GLFW_PRESS )
+          {
+               std::cout << " [TRACE] User typed Q =>> Shutdown program. Ok. " << '\n';
+               break;
+          }
+      }
+
+      // ---------- Dispose Buffer Objects ---------// 
+      glDeleteBuffers(1, &vbo_square);
+      glDeleteBuffers(1, &vbo_circle);
+
+      glfwTerminate();
+      return 0;
+  }
+
+  // ---------- I M P L E M E N T A T I O N S ------------------// 
+  //                                                            // 
+
+  // Upload buffer from main memory to GPU VBO 
+  // =>> Parameters VAO, VBO are allocated by the caller. 
+  void send_buffer(   GLuint* pVao        // Pointer to VAO (Vertex Array Object) - allocated by caller 
+                    , GLuint* pVbo        // Pointer to VBO (Vertex Buffer Object) - allocated by caller
+                    , GLsizei sizeBuffer  // Total buffer size in bytes
+                    , void*   pBufffer    // Pointer to buffer 
+                    , GLint   shader_attr // Shader attribute location id 
+                    , GLint   size        // Number of coordinates of a given vertex
+                    , GLenum  type        // Type of each element coordinate                   
+                    )
+  {
+      assert(pVao != nullptr);
+      assert(pVbo != nullptr);
+      GLuint& vao = *pVao;
+      GLuint& vbo = *pVbo;
+
+      // Generate and bind current VAO (Vertex Array Object)
+      glGenVertexArrays(1, &vao);
+      glBindVertexArray(vao);
+
+      // Generate and bind current VBO (Vertex Buffer Object)
+      glGenBuffers(1, &vbo);
+      glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+      // Upload data to current VBO buffer in GPU 
+      glBufferData(GL_ARRAY_BUFFER, sizeBuffer, pBufffer, GL_STATIC_DRAW);   
+
+      glEnableVertexAttribArray(shader_attr);
+    
+      // Set data layout - how data will be interpreted.
+      glVertexAttribPointer(shader_attr, size, type, GL_FALSE, 0, nullptr);
+
+      // ------ Disable Global state set by this function -----//
+      // 
+      // Unbind VAO 
+      glBindVertexArray(0);
+      // Unbind VBO 
+      glBindBuffer(GL_ARRAY_BUFFER, vbo);
+      // Disable current shader attribute 
+      glDisableVertexAttribArray(shader_attr);
+
+  }
+
+  void* map_buffer( GLuint* pVao         // Pointer to VAO - allocated by calling code.
+                  , GLuint* pVbo         // Pointer to VBO - allocated by calling code.
+                  , GLsizei data_size    // Total size in bytes that is allocated to buffer 
+                  , GLint   shader_attr  // Shadder attribute location id (0 - zero) is there is no shader.
+                  , GLint   size         // Number of component of each vertex 
+                  , GLenum  type         // Type of each vertex element 
+                  )
+  {
+      GLuint& vao = *pVao;
+      GLuint& vbo = *pVbo;
+
+      // Generate and bind current VAO (Vertex Array Object)
+      glGenVertexArrays(1, &vao);
+      glBindVertexArray(vao);
+
+      // Generate and bind current VBO (Vertex Buffer Object)
+      glGenBuffers(1, &vbo);
+      glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+      /** See: https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glMapBuffer.xhtml
+       ,*  Khronos Group: "glMapBuffer and glMapNamedBuffer map the entire data store of 
+       ,*  a specified buffer object into the client's address space. The data can then be directly 
+       ,*  read and/or written relative to the returned pointer, 
+       ,*  depending on the specified access policy."
+       ,*/
+      glBufferData(GL_ARRAY_BUFFER, data_size, nullptr, GL_STATIC_DRAW);   
+      void* pbuffer = glMapBuffer( GL_ARRAY_BUFFER, GL_WRITE_ONLY );
+
+      glEnableVertexAttribArray(shader_attr);
+      // Set data layout - how data will be interpreted.
+      glVertexAttribPointer(shader_attr, size, type, GL_FALSE, 0, nullptr);    
+
+      // ------ Disable Global state set by this function -----//
+      // 
+      // Unbind VAO 
+      glBindVertexArray(0);
+      // Unbind VBO 
+      glBindBuffer(GL_ARRAY_BUFFER, vbo);
+      // Disable current shader attribute 
+      glDisableVertexAttribArray(shader_attr);
+
+      // ------- Return --------------------------------------//
+      return pbuffer;
+  }
+#+END_SRC
+** 2D graphics - using shaders
+
+OpenGL retained mode (programmable pipeline) uses shaders, which are
+programs that uses GLSL (OpenGL shading language) programming
+language, runs on the GPU (Graphics Processing Unit). A vertex shader
+performs vertex coordinate transformations on all vertices and colors
+received from VBO - Vertex Buffer Objects. The fragment shader runs
+after the vertex shader and deals with vertice texture and color
+computations.
+
+A vertex shader has the following features: 
+
+ + Data types:
+   + float => Float IEEE754 32 bits floating point scalar. 
+   + vec2 => Vector of 2 coordinates
+   + vec3 => Vector of 3 coordinates 
+   + vec4 => Vector of 4 coordinates 
+   + mat2 => 2x2 matrix 
+   + mat4 => 4x4 homogeneous coordinate matrix
+   + mat3 => 3x3 matrix
+
+ + _uniform variables_ => Shader variables declared with _uniform_ storage
+   qualifier. They allow passing data, such as transformation
+   matrices, vectors or scalar values, from the C++-side to the shader
+   program. Uniform variables can be used for passing the model matrix,
+   camera matrix and projection matrix to the shader.
+   * Declaration example: 'uniform mat4 u_model;' 
+
+ + _attribute variables_ => Used for passing vertices or color
+   coordinates from VBOs (Vertex Buffer Objects). Those variables are
+   only accessible in the shader.
+   * Declaration example: 'layout ( location = 2)  in vec2 position;'
+
+ + _Output_ => Shader programs uses pre-defined global variables for
+   output, for instance, _gl_Position_, which sets the current vertex
+   position in clip-space (NDC - Normalized Device Coordinates). 
+
+
+
+ *Documentation*
+
+  + [[https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)][Core Language (GLSL) - OpenGL Wiki]] / Khronos Group.
+    + Syntax of GLSL (OpenGL shading language)
+
+  + [[https://www.khronos.org/opengl/wiki/Data_Type_(GLSL)][Data Type (GLSL) - OpenGL Wiki]] / Khronos Group
+
+  + [[https://en.wikipedia.org/wiki/OpenGL_Shading_Language][OpenGL Shading Language - Wikipedia]]
+
+  + [[https://www.khronos.org/opengl/wiki/Shader][Shader - OpenGL Wiki]] / Khronos Group
+
+  + [[https://www.khronos.org/opengl/wiki/Vertex_Shader][Vertex Shader - OpenGL Wiki]] / Khronos Group
+
+  + [[https://www.khronos.org/opengl/wiki/Fragment_Shader][Fragment Shader - OpenGL Wiki]] / Khronos Group
+
+  + [[https://www.khronos.org/opengl/wiki/Uniform_(GLSL)][Uniform (GLSL) - OpenGL Wiki]] / Khronos Group
+    + Discusses shader uniform variables.
+
+  + [[https://www.khronos.org/opengl/wiki/Layout_Qualifier_(GLSL)][Layout Qualifier (GLSL) - OpenGL Wiki]] / Khronos Group
+    + Shader attribute index (attribute location)
+
+  + [[https://www.khronos.org/opengl/wiki/Geometry_Shader][Geometry Shader - OpenGL Wiki]] / Khronos Group.
+
+  + [[https://www.khronos.org/opengl/wiki/Shader_Compilation][Shader Compilation - OpenGL Wiki]] / Khronos Group.
+
+  + [[https://www.khronos.org/opengl/wiki/Vertex_Rendering][Vertex Rendering - OpenGL Wiki]]
+
+  + [[https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Data][Data in WebGL - Web APIs | MDN]] / Mozilla 
+    + Explanation of shader's attribute variables and shader's uniform
+      variables. 
+
+  *Source Code*  
+
+Summary:
+
+ + This sample application, draws many 4 triangles from a 2 VBO
+   (Vertex Buffer Object) and a single VAO (Vertex Array Object). The
+   application uses a vertex shader for performing coordinate
+   transformation for every triangle and drawing them at different
+   position with different rotation angles around Z axis. The triangle
+   'triangleD' follows the mouse position while the triangle
+   'triangleB' rotates acoording to the mouse position.
+
+ + The vertex shader has two attributes variables ('position' and
+   'color') and two uniform variables u_model, that contains the model
+   matrix from every rendered object, and u_projection, which contains
+   the projection matrix. 
+
+Screenshot: 
+
+[[file:images/opengl-draw2d-shader.png][file:images/opengl-draw2d-shader.png]]
+
+
+_Vertex Shader_ - Source Code (Extraced from _draw2d-shader.cpp_)
+
+#+BEGIN_SRC cpp 
+    #version 330 core 
+
+    // Supplied by GPU - attribute location (id = 2) 
+    // contains a (X, Y) vertex
+    layout ( location = 2)  in vec2 position;
+    layout ( location = 1 ) in vec3 color;     // Contains (Red, Green, Blue) components
+
+    // Output to fragment shader 
+    out vec3 out_color;
+
+    // Model matrix => projection coordinates from the local space (model space)
+    // to view space .
+    // Transform 4x4 matrix - supplied by the C++ side. 
+    uniform mat4 u_model;
+
+    // Projection matrix => projections camera-space coordinates 
+    // to clip-space coordinates. (-1.0 to 1.0) range.
+    uniform mat4 u_projection;
+
+    void main()
+    {
+        // gl_Position => Global output variable that holds the 
+        // the current vertex position. It is a vector of 
+        // components (X, Y, Z = 0, W = ignored)
+        gl_Position = u_projection * u_model * vec4(position, 0, 1.0);
+
+        // Forward to fragment shader 
+        out_color = color;
+    }
+#+END_SRC
+
+_Fragment Shader_ -  Source Code (Extracted from _draw2d-shader.cpp_)
+
+
+#+BEGIN_SRC cpp 
+   #version 330 
+
+   // This color comes from Vertex shader 
+   in vec3 out_color;
+
+   void main()
+   {
+       // Set vertex colors
+       gl_FragColor = vec4(out_color, 1.0);
+
+   }
+#+END_SRC
+
+File: _CMakeLists.txt_
+
+#+BEGIN_SRC cmake 
+   cmake_minimum_required(VERSION 3.5)
+   project(GLFW_project)
+
+   set(CMAKE_CXX_STANDARD 17)
+   set(CMAKE_CXX_STANDARD_REQUIRED ON)
+   set(CMAKE_VERBOSE_MAKEFILE ON)
+
+   #================ GLFW Settings  ===============#
+
+   find_package(OpenGL REQUIRED)
+
+   include(FetchContent)
+
+   # Set GLFW Options before FectchContent_MakeAvailable 
+   set( GLFW_BUILD_EXAMPLES OFF CACHE BOOL  "GLFW lib only" )
+   set( GLFW_BUILD_TESTS    OFF CACHE BOOL  "GLFW lib only" )
+   set( GLFW_BUILD_DOCS     OFF CACHE BOOL  "GLFW lib only" )
+   set( GLFW_BUILD_INSTALL  OFF CACHE BOOL  "GLFW lib only" )
+
+   # Donwload GLFW library
+   FetchContent_Declare(
+     glfwlib
+     URL   https://github.com/glfw/glfw/releases/download/3.3.2/glfw-3.3.2.zip
+   )
+   FetchContent_MakeAvailable(glfwlib)
+
+   # Download GLM (OpenGL math library for matrix and vectors transformation)
+   FetchContent_Declare(
+     glm  
+     URL  https://github.com/g-truc/glm/archive/0.9.8.zip
+   )
+   FetchContent_MakeAvailable(glm)
+
+   message( [DEBUG] " glm_SOURCE_DIR = ${glm_SOURCE_DIR} ")
+   include_directories(${glm_SOURCE_DIR})
+
+     # ======= TARGETS ===========================#
+
+          add_executable( draw2d-shader  draw2d-shader.cpp   )
+   target_link_libraries( draw2d-shader  glfw OpenGL::GL GLU )
+#+END_SRC
+
+File: _draw2d-shader.cpp_ 
+
+#+BEGIN_SRC cpp 
+  // Draw many colored triangles from a single VBO (Vertex Buffer Object)
+  #include <iostream>
+  #include <vector> 
+  #include <array>
+  #include <cmath>
+  #include <functional>
+
+  // -------- OpenGL headers ---------//
+  //
+  #define GL_GLEXT_PROTOTYPES 1 // Necessary for OpenGL >= 3.0 functions
+  #define GL3_PROTOTYPES      1 // Necessary for OpenGL >= 3.0 functions
+
+  #include <GL/gl.h>
+  #include <GLFW/glfw3.h>
+
+  // #include <GL/glew.h>
+  #include <GL/glu.h>
+
+  // --------- OpenGL Math Librar ------------//
+  #include <glm/glm.hpp>
+  #include <glm/gtc/matrix_transform.hpp>
+  #include <glm/gtc/type_ptr.hpp>
+  #include <glm/gtx/string_cast.hpp>
+
+
+  // Compile some  shader 
+  void compile_shader(GLuint m_program, const char* code, GLenum type);
+
+  // Send data from memory to GPU VBO memory 
+  void send_buffer(   GLuint* pVao        // Pointer to VAO (Vertex Array Object) - allocated by caller 
+                    , GLuint* pVbo        // Pointer to VBO (Vertex Buffer Object) - allocated by caller
+                    , GLsizei sizeBuffer  // Total buffer size in bytes
+                    , void*   pBufffer    // Pointer to buffer 
+                    , GLint   shader_attr // Shader attribute location id 
+                    , GLint   size        // Number of coordinates of a given vertex
+                    , GLenum  type        // Type of each element coordinate                   
+                    );
+
+  // ------------ Basic Data Structures -----------// 
+
+  // Wrapper for 2D vertex coordinates 
+  struct Vertex2D{  GLfloat x, y;  };
+  // Wrapper for RGB colors 
+  struct ColorRGB { GLfloat r, g, b; };
+
+  constexpr ColorRGB COLOR_R = { 1.0, 0.0, 0.0  }; // Red 
+  constexpr ColorRGB COLOR_G = { 0.0, 1.0, 0.0  }; // Green 
+  constexpr ColorRGB COLOR_B = { 0.0, 0.0, 1.0  }; // Blue 
+
+
+  class Model_Triangle
+  {
+      // Object position in World Coordinates
+      float _x = 0.0, _y = 0.0; 
+      // Scale 
+      float _scale = 1.0;
+      // Rotation angle around z axis
+      float _angle = 0.0;
+    
+  public:
+      Model_Triangle(float scale = 1.0){   }
+      void rotate(float angle)          { _angle = angle; }
+      void translate(float x , float y) { _x = x; _y = y; }
+      void scale(float scale)           { _scale = scale; }
+      void zoom(float factor)           {  _scale = factor + _scale; }
+
+      // Render/draw this object 
+      void render(GLuint vao, GLint  u_model)
+      {
+        
+          // Reset model matrix to indentiy matrix 
+          glm::mat4 _model(1.0);
+          // Scale object (increase or decrease object size)
+          _model =  glm::scale( _model, glm::vec3(_scale, _scale, _scale) );
+          // Move to (X, Y) position 
+          _model = glm::translate( _model, glm::vec3(_x, _y, 0.0)  ); 
+          // Rotate from a given angle around Z axis at current object X, Y  postion
+          _model = glm::rotate( _model, glm::radians(_angle), glm::vec3(0, 0, 1) );
+
+          // Set shader uniform variable.
+          glUniformMatrix4fv( 
+              // Shader uniform variable location 
+              u_model  
+              // Number of matrices that will be set 
+              , 1
+              // GL_FALSE => Matrix is in column-major order (Fortran matrix layout)
+              // GL_TRUE  => Matrix is in row-major order (C, C++ array, matrix layout)
+              , GL_FALSE
+              // Pointer to first element transform matrix (homogeneous coordinate)
+              , glm::value_ptr(_model) 
+          );
+          glBindVertexArray(vao);        
+          // Draw 3 vertices 
+          glDrawArrays(GL_TRIANGLES, 0, 3);        
+          // Disable global state 
+          glBindVertexArray(0);        
+      }
+  };
+
+
+  // Global variable [WARNING] - Vulnerable to global "initialization fiasco" 
+  // undefined behavior.
+  auto Cursor_Callback = std::function<void (GLFWwindow* window, double xpos, double ypos)>();
+
+  int main(int argc, char** argv)
+  {
+
+      /* Initialize the library */
+      if (!glfwInit()){ return -1; }
+
+      // OpenGL Core Profile 
+      glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+      glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+      glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+      glfwSetErrorCallback([](int error, const char* description)
+                           {
+                              std::cerr << " [GLFW ERROR] " << error 
+                                        << ": " << description 
+                                        << std::endl;
+                           });
+
+      GLFWwindow* window = glfwCreateWindow(640, 480, "2D Drawing with Shader", NULL, NULL);
+      if (!window){ glfwTerminate(); return -1; }
+
+      // OpenGL context 
+      glfwMakeContextCurrent(window);
+      glClearColor(0.0f, 0.5f, 0.6f, 1.0f);
+
+      // Mouse move callback 
+      // Note: It is only possible to pass non-capturing lambda to this callback.
+      glfwSetCursorPosCallback( window
+                              , [](GLFWwindow* window, double xpos, double ypos)
+                                {
+                                    // Forward call to global variable std::function<> 
+                                    // (Function object)
+                                    Cursor_Callback(window, xpos, ypos);
+                                });
+
+      // ====== S H A D E R - C O M P I L A T I O N ====//
+      //                                                // 
+
+      // Note: The shader source code is at the end of file.
+      extern const char* code_vertex_shader;
+      extern const char* code_frag_shader;
+
+      GLuint prog = glCreateProgram();
+      // Compile shader code 
+      compile_shader(prog, code_vertex_shader, GL_VERTEX_SHADER  ) ;    
+      compile_shader(prog, code_frag_shader,   GL_FRAGMENT_SHADER );
+
+      // Bind current shader (enable it). Only one shader of the same type can 
+      // be bound at a time. For instance, only a single vertex shader can 
+      // be enabled at a time
+      glUseProgram(prog);
+
+      // Get shader uniform variable location for projection matrix
+      // See shader code: "uniform mat4 projection;"
+      const GLint u_proj  = glGetUniformLocation(prog, "u_projection");
+      assert( u_proj >= 0 && "Failed to find uniform variable" );
+
+      // Get shader uniform variable  location for model matrix.
+      const GLint u_model  = glGetUniformLocation(prog, "u_model");
+      assert( u_model >= 0 && "Failed to find uniform variable" );    
+
+      // Get shader attribute location - the function glGetAttribLocation - returns (-1) on error.
+      const GLint attr_position = glGetAttribLocation(prog, "position");
+      assert( attr_position >= 0 && "Failed to get attribute location" );
+      std::fprintf(stderr, " [TRACE] Attribute location attr_position = %d \n"
+                  , attr_position);
+
+      // Get shader index of color attribute variable.
+      const GLint attr_color = glGetAttribLocation(prog, "color");
+      assert( attr_color >= 0);
+
+
+      // ====== U P L O A D - TO - G P U =========================// 
+      //                                                          //
+
+      constexpr size_t NUM_VERTICES = 3;
+
+      // Array of triangle vertex coordinates (X, Y)
+      Vertex2D vertices[NUM_VERTICES] = { 
+        {  0.0,   0.2} // Vertex 0  (x =  0.0 ; y =  0.5)
+      , { -0.2,  -0.2} // Vertex 1  (x = -0.5 ; y = -0.5)
+      , {  0.2,  -0.2} // Vertex 2  (x =  0.5 ; y = -0.5)
+      };
+
+      ColorRGB colors[NUM_VERTICES] = { 
+            COLOR_R   // Color of vertex 0
+          , COLOR_B   // Color of vertex 1 
+          , COLOR_G   // Color of vertex 2 
+      };
+
+      // Always initialize with zero (0), otherwise, the values
+      // of those variables will be undefined. (Undefine Behavior)
+      GLuint vao_triangle = 0;
+      GLuint vbo_vertices = 0;
+      GLuint vbo_colors   = 0;
+
+      // Send vertices to GPU VBO (vbo_vertices)
+      send_buffer(  &vao_triangle    // Ponter to VAO [OUTPUT]
+                  , &vbo_vertices    // Pointer VBO   [OUTPUT]
+                  , sizeof(vertices) // Size of buffer sent to GPU (VBO memory)
+                  , vertices         // Pointer to buffer 
+                  , attr_position    // Shader attribute location 
+                  , 2                // Each vertex has 2 coordinates (X, Y)
+                  , GL_FLOAT         // Each vertex coordinate has type GLfloat (float)
+                  );
+
+      // Send colors to GPU VBO (vbo_colors)
+      send_buffer(  &vao_triangle   // Pointer Vertex Array object
+                  , &vbo_colors     // Pointer Vertex buffer object handle (aka token)
+                  , sizeof(colors)  // Buffer size 
+                  , colors          // Pointer to buffer (fist buffer element)
+                  , attr_color      // Shader attribute th
+                  , 3               // Each color has 3 coordinates (R, G, B)
+                  , GL_FLOAT        // Each color coordiante has type GLfloat
+                  );
+
+      // ============== Set Shader Uniform Variables =============// 
+      //                                                          // 
+
+      int width, height;
+      glfwGetWindowSize(window, &width, &height);
+    
+      // Window aspect ratio
+      float aspect = static_cast<float>(width) / height;
+
+      // Identity matrix 
+      const auto identity = glm::mat4(1.0);
+    
+      // Projection matrix - orthogonal projection for compensating 
+      // the aspect ratio.
+      glm::mat4 Tproj = glm::ortho(-aspect, aspect, -1.0f, 1.0f, -1.0f, 1.0f);
+
+      // Set projection matrix uniform variable
+      glUniformMatrix4fv(u_proj, 1, GL_FALSE, glm::value_ptr(Tproj) );
+      // Set model matrix uniform variable
+      glUniformMatrix4fv(u_model, 1, GL_FALSE, glm::value_ptr(identity) );
+
+      // Instatiate objects that will be rendered 
+      auto triangleA = Model_Triangle{};
+      triangleA.scale(0.50);
+      triangleA.rotate(122);
+
+      auto triangleB = Model_Triangle{};
+      triangleB.translate(-0.20, 0.30);
+      triangleB.rotate(50);
+      triangleB.scale(1.8);
+
+      auto triangleC = Model_Triangle{};
+      triangleC.translate(0.20, 0.20);
+      triangleC.rotate(35);
+
+      // Follows mouse coordinate 
+      auto triangleD = Model_Triangle{};
+      triangleD.translate(-0.60, -0.50);
+      triangleD.scale(1.50);
+      // triangleD.scale(1.2);
+      // triangleD.rotate(40);    
+
+      // --------- Set mouse callback ----------// 
+
+      constexpr float PI = 3.1415926536f;
+      constexpr float FACTOR_RAD_TO_DEG = 180.0 / PI;
+
+      Cursor_Callback = [&](GLFWwindow* window, double xpos, double ypos)
+      {
+          // Mouse normalized coordinate 
+          // =>> see: https://stackoverflow.com/questions/23870750/
+          float xMouse = -1.0f + 2.0f * xpos / width;
+          float yMouse =  1.0f - 2.0f * ypos / height;
+
+          // Angle in degrees between X axis vector(1, 0, 0) and poit (xMouse, yMouse, 0) position.
+          // Note: atan2f() returns angle in radians. 
+          float angle = atan2f(yMouse, xMouse) * FACTOR_RAD_TO_DEG ;
+          fprintf(stderr, " [TRACE] Angle = %f \n", angle);
+
+          // Triangle D follows mouse position
+          triangleD.translate(xMouse, yMouse);
+          triangleD.rotate(angle);
+
+          triangleB.rotate(angle);
+        
+          // Show mouse position
+           // std::fprintf(stderr, " [MOUSE] x = %f ; y = %f \n", xMouse, yMouse);
+      };
+
+      //  ======= R E N D E R  - L O O P ============//
+      //                                             //
+      while ( !glfwWindowShouldClose(window) )
+      {
+          glClear(GL_COLOR_BUFFER_BIT);
+
+          // ====== BEGIN RENDERING ============//
+        
+              triangleA.render(vao_triangle, u_model);
+              triangleB.render(vao_triangle, u_model);
+              triangleC.render(vao_triangle, u_model);
+              triangleD.render(vao_triangle, u_model);
+
+              //std::fprintf(stderr, " [TRACE] Redraw screen \n");
+
+          // ====== END RENDERING ==============//
+
+          /* Swap front and back buffers */
+          glfwSwapBuffers(window);
+          /* Poll for and process events */
+          glfwPollEvents();
+
+          if( glfwGetKey(window, 'Q' ) == GLFW_PRESS )
+          {
+               std::cout << " [TRACE] User typed Q =>> Shutdown program. Ok. " << '\n';
+               break;
+          }
+
+          // Increase scale by 10%
+          if( glfwGetKey(window, 'A' ) == GLFW_PRESS ){ triangleD.zoom(+0.10); }
+          // Decrease scale by 10%
+          if( glfwGetKey(window, 'B' ) == GLFW_PRESS ){ triangleD.zoom(-0.10); }
+
+
+      }
+
+      glfwTerminate();
+      return 0;
+
+  } // --- End of main() -----//
+
+
+  // Minimal vertex shader =>> Runs on the GPU and processes each vertex.
+  const char* code_vertex_shader = R"(    
+      #version 330 core 
+
+      // Supplied by GPU - attribute location (id = 2) 
+      // contains a (X, Y) vertex
+      layout ( location = 2)  in vec2 position;
+      layout ( location = 1 ) in vec3 color;     // Contains (Red, Green, Blue) components
+
+      // Output to fragment shader 
+      out vec3 out_color;
+
+      // Model matrix => projection coordinates from the local space (model space)
+      // to view space .
+      // Transform 4x4 matrix - supplied by the C++ side. 
+      uniform mat4 u_model;
+
+      // Projection matrix => projections camera-space coordinates 
+      // to clip-space coordinates. (-1.0 to 1.0) range.
+      uniform mat4 u_projection;
+
+      void main()
+      {
+          // gl_Position => Global output variable that holds the 
+          // the current vertex position. It is a vector of 
+          // components (X, Y, Z = 0, W = ignored)
+          gl_Position = u_projection * u_model * vec4(position, 0, 1.0);
+
+          // Forward to fragment shader 
+          out_color = color;
+      }
+
+  )";
+
+  // Fragment shader source code 
+  const char* code_frag_shader = R"(
+      #version 330 
+
+      // This color comes from Vertex shader 
+      in vec3 out_color;
+
+      void main()
+      {
+          // Set vertex colors
+          gl_FragColor = vec4(out_color, 1.0);
+
+      }
+  )";
+
+      // ====== I M P L E M E N T A T I O N S ==========// 
+
+  void compile_shader(GLuint m_program, const char* code, GLenum type)
+  {
+      GLint shader_id = glCreateShader( type );
+      glShaderSource(shader_id, 1, &code, nullptr);
+      glCompileShader(shader_id);
+    
+      GLint is_compiled = GL_FALSE;
+      // Check shader compilation result 
+      glGetShaderiv(shader_id, GL_COMPILE_STATUS, &is_compiled);
+
+      // If there is any shader compilation result, 
+      // print the error message.
+      if( is_compiled == GL_FALSE)
+      {
+          GLint length;
+          glGetShaderiv(shader_id, GL_INFO_LOG_LENGTH, &length);
+          assert( length > 0 );
+
+          std::string out(length + 1, 0x00);
+          GLint chars_written;
+          glGetShaderInfoLog(shader_id, length, &chars_written, out.data());
+          std::cerr << " [SHADER ERROR] = " << out << '\n';
+          // Abort the exection of current process. 
+          std::abort();
+      }          
+
+      glAttachShader(m_program, shader_id);   
+      glDeleteShader(shader_id);
+      glLinkProgram(m_program);
+      GLint link_status = GL_FALSE;
+      glGetProgramiv(m_program, GL_LINK_STATUS, &link_status);
+      assert( link_status != GL_FALSE );   
+      // glUseProgram(m_program);         
+  }
+
+  // Upload buffer from main memory to GPU VBO 
+  // =>> Parameters VAO, VBO are allocated by the caller. 
+  void send_buffer( GLuint* pVao, GLuint* pVbo, GLsizei sizeBuffer
+                  , void* pBufffer, GLint   shader_attr, GLint size
+                  , GLenum type)
+  {
+      assert(pVao != nullptr);
+      assert(pVbo != nullptr);
+      GLuint& vao = *pVao;
+      GLuint& vbo = *pVbo;
+
+      // Generate and bind current VAO (Vertex Array Object)
+      if(vao == 0){ glGenVertexArrays(1, &vao); }
+      glBindVertexArray(vao);
+
+      // Generate and bind current VBO (Vertex Buffer Object)
+      glGenBuffers(1, &vbo);
+      glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+      // Upload data to current VBO buffer in GPU 
+      glBufferData(GL_ARRAY_BUFFER, sizeBuffer, pBufffer, GL_STATIC_DRAW);   
+
+      glEnableVertexAttribArray(shader_attr);
+    
+      // Set data layout - how data will be interpreted.
+      glVertexAttribPointer(shader_attr, size, type, GL_FALSE, 0, nullptr);
+
+      // ------ Disable Global state set by this function -----//
+      // 
+      // Unbind VAO 
+      glBindVertexArray(0);
+      // Unbind VBO 
+      glBindBuffer(GL_ARRAY_BUFFER, vbo);
+      // Disable current shader attribute 
+      glDisableVertexAttribArray(shader_attr);
+
+  }
+#+END_SRC
+
