@@ -10,4 +10,4 @@ Rahul Bagal,<br />
 Pune, Maharashtra, India.<br />
 
 ## Array
-- TwoSum[https://github.com/Rahul7171/Data-Structure/blob/main/Array/TwoSum.py]
+- TwoSum [https://github.com/Rahul7171/Data-Structure/blob/main/Array/TwoSum.py]
