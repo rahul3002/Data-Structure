@@ -9,4 +9,8 @@ Rahul Bagal,<br />
 
 Pune, Maharashtra, India.<br />
 
-## List Algorithms
+## Algorithmic Paradigms
+- Brute Force
+- Greedy Algorithm
+- Divide & conquer
+- Dynamic Programmings
