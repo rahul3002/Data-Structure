@@ -9,8 +9,5 @@ Rahul Bagal,<br />
 
 Pune, Maharashtra, India.<br />
 
-## Algorithmic Paradigms
-- Brute Force
-- Greedy Algorithm
-- Divide & conquer
-- Dynamic Programmings
+## Array
+- TwoSum[https://github.com/Rahul7171/Data-Structure/blob/main/Array/TwoSum.py]
