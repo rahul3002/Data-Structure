@@ -1,5 +1,5 @@
 """
-Numbers can be regarded as product of its factors. For example,
+Numbers Can Be Regarded As Product of Its Factors. For example,
 8 = 2 x 2 x 2;
   = 2 x 4.
 
